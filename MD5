@@ -1,13 +1,13 @@
-14c5e334833e70d7d78dd888104f75d9 *DESCRIPTION
+bf60684a51ece93652e9bf4cbb63f368 *DESCRIPTION
 07ba14561558f7530892fcca10cfb3c2 *LICENSE
 7dd2c9865f9f695e96b205e3102b5571 *NAMESPACE
-83fdeb41f3619c19d0b79cb73770b2c7 *NEWS.md
+3fc251e1f3ef7c0fe9aa1cda2d6f5313 *NEWS.md
 ac7a52ddc0665d8fbe132d25e5605f4d *R/cells_citeseq_mtx.r
-8b1819b2f1f89586af299fa4ef003c83 *R/dsb.r
+b7571eb2e894087d175d4787d6695393 *R/dsb.r
 bd9056dce1f7217e18c86827fc8b903d *R/empty_drop_citeseq_mtx.R
 7490b0dc23b9185332eb4ed9489f3fee *R/utils-pipe.R
 aebfbbde87fa1da86695a394521565ab *R/zzz.r
-d2bfc546445ea832dc29249c710d3474 *README.md
+99147f5cc2aff7f41a7dc7a2c2eb71ac *README.md
 dd39cea60cd4824e541d86232d4c0869 *build/vignette.rds
 e3070ceaf6340124d320d9cb1df0a00c *data/raw_emptydrop_mtx_example_87ab_citeseq_Tsang.rda
 a0425111aa9e62cd9a4a1b96d6e7bb59 *data/raw_pbmc_mtx_example_87ab_citeseq_Tsang.rda
@@ -16,7 +16,7 @@ a0425111aa9e62cd9a4a1b96d6e7bb59 *data/raw_pbmc_mtx_example_87ab_citeseq_Tsang.r
 31cf5424b3575291f23b9606cbd6d5ef *inst/doc/dsb_normalizing_CITEseq_data.R
 a65cfa9bdc32fd367843e0a558e6f2c8 *inst/doc/dsb_normalizing_CITEseq_data.Rmd
 1e154cda10700efaac50b3538cee6486 *inst/doc/dsb_normalizing_CITEseq_data.html
-ece9059c3d5b78f38fce4a86dbc6834b *man/DSBNormalizeProtein.Rd
+c097134df30162a7d8e6c46926476216 *man/DSBNormalizeProtein.Rd
 d200e25f061c3bab7f7e934c5665ef94 *man/cells_citeseq_mtx.Rd
 a047b8bc17f0c89e4064145c4900f02b *man/empty_drop_citeseq_mtx.Rd
 e94e746b15af0bc6bb09e22945b4459f *man/figures/WNN_umap.png
@@ -30,5 +30,5 @@ aa85eb12b4a612361930bedccd682c78 *man/figures/umap.png
 b7523dd10128122403c4c1a33f53f5ee *man/pipe.Rd
 0622a97a2aaa3c342f09636052c2d7f5 *tests/spelling.R
 660ae4a8871c2fa3b34e0474c62e89d3 *tests/testthat.R
-27951bf353c19346f1d993d52bda63c1 *tests/testthat/test_dsb_function.R
+cbc42f987d33cac3afb40d1d51d2db71 *tests/testthat/test_dsb_function.R
 a65cfa9bdc32fd367843e0a558e6f2c8 *vignettes/dsb_normalizing_CITEseq_data.Rmd
