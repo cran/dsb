@@ -4,11 +4,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----setup--------------------------------------------------------------------
-library(dsb)
-r = '#009ACD80'
-
 ## -----------------------------------------------------------------------------
+library(dsb)
 # pecify isotype controls to use in step II 
 isotypes = c("MouseIgG1kappaisotype_PROT", "MouseIgG2akappaisotype_PROT", 
              "Mouse IgG2bkIsotype_PROT", "RatIgG2bkIsotype_PROT")
@@ -23,7 +20,7 @@ norm.adt = ModelNegativeADTnorm(cell_protein_matrix = raw.adt.matrix,
 
 
 ## ---- fig.width=7.5, fig.height=6---------------------------------------------
-par(mfrow = c(2,2))
+par(mfrow = c(2,2)); r = '#009ACD80'
 lab = 'ModelNegativeADTnorm'
 hist(norm.adt["CD4_PROT", ], breaks = 45, col = r, main = 'CD4', xlab = lab)
 hist(norm.adt["CD8_PROT", ], breaks = 45, col = r, main = 'CD8', xlab = lab)
@@ -32,6 +29,7 @@ hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  # these data were installed with the SeuratData package
+#  # devtools::install_github('satijalab/seurat-data')
 #  # library(SeuratData)
 #  # InstallData(ds = 'bmcite')
 #  
@@ -44,16 +42,18 @@ hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 #  
 #  # unfortunately this data does not have isotype controls
 #  dsb.norm = ModelNegativeADTnorm(cell_protein_matrix = adt,
-#                                  empty_drop_matrix = NULL,
-#                                  use.isotype.control = FALSE,
-#                                  denoise.counts = TRUE)
+#                                  denoise.counts = TRUE,
+#                                  use.isotype.control = FALSE)
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  dsb.norm.2 = DSBNormalizeProtein_(cell_protein_matrix = adt,
-#                                    empty_drop_matrix = NULL
+#  
+#  # specify isotype controls
+#  isotype.controls = c('isotype1', 'isotype 2')
+#  # normalize ADTs
+#  dsb.norm.2 = ModelNegativeADTnorm(cell_protein_matrix = adt,
 #                                    denoise.counts = TRUE,
 #                                    use.isotype.control = TRUE,
-#                                    isotype.control.name.vec = c('isotype1', 'isotype 2')
+#                                    isotype.control.name.vec = isotype.controls
 #                                    )
 
 ## ---- fig.width=7, fig.height=3.5, eval = FALSE-------------------------------
@@ -72,7 +72,7 @@ hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 ## ---- eval = FALSE------------------------------------------------------------
 #  bm = SetAssayData(bmcite, slot = 'data',
 #                    assay = 'ADT',
-#                    new.data = dsb.norm.adt)
+#                    new.data = dsb.norm)
 #  
 #  # process RNA for WNN
 #  DefaultAssay(bm) <- 'RNA'

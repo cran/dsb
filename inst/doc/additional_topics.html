@@ -536,21 +536,52 @@ pre code {
 <h2>Advanced usage - return internal stats used by dsb <a name="advanced"></a></h2>
 <p>If you want to look at internal stats calculated by dsb you can do so by setting <code>return.stats = TRUE</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(dsb)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">result.list =<span class="st"> </span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">DSBNormalizeProtein</span>(</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>], </a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">    <span class="dt">use.isotype.control =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>], </a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="dt">return.stats =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">  )</a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; loaded dsb package version 1.0.1 please cite DOI: 10.1101/2020.02.24.963603</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; Package 'dsb'</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">result.list =<span class="st"> </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">DSBNormalizeProtein</span>(</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>], </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="dt">use.isotype.control =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">    <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>], </a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="dt">return.stats =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">  )</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; [1] &quot;correcting ambient protein background noise&quot;</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; [1] &quot;some proteins with low background variance detected check raw and normalized distributions.  protein stats can be returned with return.stats = TRUE&quot;</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; [1] &quot;CD185_PROT&quot;</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; [1] &quot;fitting models to each cell for dsb technical component and removing cell to cell technical noise&quot;</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; [1] &quot;returning results in a list; normalized matrix accessed x$dsb_normalized_matrix&quot;</span></a></code></pre></div>
 <p>The results are provided as a list</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">names</span>(result.list)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">names</span>(result.list)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; [1] &quot;dsb_normalized_matrix&quot; &quot;technical_stats&quot;       &quot;protein_stats&quot;</span></a></code></pre></div>
 <p>Different protein level stats available:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">names</span>(result.list<span class="op">$</span>protein_stats)</a></code></pre></div>
-<p>We can extract the dsb technical component from this list for example:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">result.list<span class="op">$</span>technical_stats <span class="op">%&gt;%</span><span class="st"> </span>head </a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">names</span>(result.list<span class="op">$</span>protein_stats)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; [1] &quot;raw cell matrix stats&quot;       &quot;dsb normalized matrix stats&quot;</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; [3] &quot;background_mean&quot;             &quot;background_sd&quot;</span></a></code></pre></div>
+<p>We can also extract the dsb technical component and variables used to derive the technical component for example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">head</span>(result.list<span class="op">$</span>technical_stats)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt;                          MouseIgG1kappaisotype_PROT MouseIgG2akappaisotype_PROT</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2                  0.7409978                   2.1388457</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3                 -0.6802394                   1.4410413</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4                 -0.6802394                  -0.1319484</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6                 -0.6802394                  -0.1319484</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2                 -0.6802394                   1.4410413</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6                  0.7409978                  -1.0293939</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;                          Mouse IgG2bkIsotype_PROT RatIgG2bkIsotype_PROT</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2                2.0081678            -0.4511315</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3                0.1938776             0.7393731</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4               -0.8412382            -0.4511315</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6                0.1938776            -0.4511315</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2                0.1938776             0.7393731</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6               -0.8412382            -0.4511315</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt;                          cellwise_background_mean dsb_technical_component</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2              0.424416035             -1.69894383</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3              0.129457815             -0.62075991</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4              0.008699038              0.77617240</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6              0.239007906              0.30128399</span></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2             -0.170614869             -0.24429265</span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6             -0.039058826             -0.06709057</span></a></code></pre></div>
 </div>
 <div id="outlier-clipping-with-the-quantile.clipping-argument" class="section level2">
 <h2>outlier clipping with the quantile.clipping argument <a name="outliers"></a></h2>
@@ -588,7 +619,7 @@ pre code {
 <a href="https://github.com/niaid/dsb/issues/6" class="uri">https://github.com/niaid/dsb/issues/6</a><br />
 <a href="https://github.com/niaid/dsb/issues/26" class="uri">https://github.com/niaid/dsb/issues/26</a></p>
 <p><strong>I am getting a memory limit error when I use dsb</strong><br />
-This is likely becaues you are using too many barcodes in the negative population–please follow the vignette; if you are using Cell Ranger counts the raw barcode matrix is all the theoretical barcides, you need to narrow in on the barcodes for which you have empty drops that captured ADT and cell containing droplets.</p>
+This is likely because you are using too many barcodes in the negative population–please follow the vignette; if you are using Cell Ranger counts the raw barcode matrix is all the theoretical barcodes, you need to narrow in on the barcodes for which you have empty drops that captured ADT and cell containing droplets.</p>
 <p><strong>I get a &quot;problem too large or memory exhausted error when I try to convert to a regular R matrix</strong> - See above and see issue 10 on the dsb github. CITE-seq protein counts don’t need a sparse representation-very likely this error is because there are too many negative droplets defined (i.e. over 1 million). You should be able to normalize datasets with 100,000+ cells and similar numbers of negative droplets (or less) on a normal 16GB laptop. By further narrowing in on the major background distribution, one should be able to convert the cells and background to a normal R matrix which should run successfully.<br />
 <a href="https://github.com/niaid/dsb/issues/10" class="uri">https://github.com/niaid/dsb/issues/10</a></p>
 <p><strong>the range of dsb normalized values is large is this normal?</strong> In nearly all cases encountered thus far, the large range of values for a protein (e.g. ranging from -50 to 50) are caused by just a few outlier cells, most often a few cells with low negative values for the protein. We have now provided a quantile clipping option in dsb to address these outlier cells. Users can also investigate these cells to see if they have very high values for isotype control proteins and they can possibly be removed from the dataset. <a href="https://github.com/niaid/dsb/issues/22" class="uri">https://github.com/niaid/dsb/issues/22</a><br />
@@ -641,7 +672,7 @@ data.<br />
 <a class="sourceLine" id="cb15-13" data-line-number="13">prot =<span class="st"> </span><span class="kw">do.call</span>(cbind, prot)</a>
 <a class="sourceLine" id="cb15-14" data-line-number="14">rna =<span class="st"> </span><span class="kw">do.call</span>(cbind, rna)</a>
 <a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co"># proceed with step 1 in tutorial - define background and cell containing drops for dsb</span></a></code></pre></div>
-<p><strong>I have 2 batches, should I combine them into a single batch or normalize each batch separately?</strong> - (See issue 12 on the dsb github) How much batch variation there is depends on how much experiment-specific and expected biological variability there is between the batches. In the dataset used in the preprint, if we normalized with all background drops and cells in a single normalization, the resulting dsb normalized values were highly concordant with when we normalized each batch separately, this held true with either definition of background drops used (i.e. based on thresholding with the library size or based on hashing-see below). One could try both and see which mitigates the batch variation the most. See <a href="https://github.com/niaid/dsb/issues/12" class="uri">https://github.com/niaid/dsb/issues/12</a> for example code. If there are significant batch to batch variations from an experiment with the same antobidy panel on the same type of cells, we recommend starting out with simple linear model based correction with limma as a starting point (type ?limma::removeBatchEffect into R console for more information).</p>
+<p><strong>I have 2 batches, should I combine them into a single batch or normalize each batch separately?</strong> - (See issue 12 on the dsb github) How much batch variation there is depends on how much experiment-specific and expected biological variability there is between the batches. In the dataset used in the preprint, if we normalized with all background drops and cells in a single normalization, the resulting dsb normalized values were highly concordant with when we normalized each batch separately, this held true with either definition of background drops used (i.e. based on thresholding with the library size or based on hashing-see below). One could try both and see which mitigates the batch variation the most. See <a href="https://github.com/niaid/dsb/issues/12" class="uri">https://github.com/niaid/dsb/issues/12</a> for example code. If there are significant batch to batch variations from an experiment with the same antibody panel on the same type of cells, we recommend starting out with simple linear model based correction with limma as a starting point (type ?limma::removeBatchEffect into R console for more information).</p>
 </div>
 </div>
 

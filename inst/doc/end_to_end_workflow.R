@@ -1,9 +1,9 @@
 ## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  eval = FALSE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  eval = FALSE,
+  # fig.path = "man/figures/README-",
   out.width = "100%"
 )
 

@@ -1,8 +1,7 @@
 ## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", 
-  eval = FALSE
+  comment = "#>"
 )
 
 ## ---- eval=FALSE--------------------------------------------------------------
@@ -85,26 +84,26 @@ knitr::opts_chunk$set(
 #  # proceed with same tutorial workflow shown above.
 
 ## -----------------------------------------------------------------------------
-#  library(dsb)
-#  result.list =
-#    DSBNormalizeProtein(
-#      cell_protein_matrix = cells_citeseq_mtx[ ,1:50],
-#      empty_drop_matrix = empty_drop_citeseq_mtx,
-#      denoise.counts = TRUE,
-#      use.isotype.control = TRUE,
-#      isotype.control.name.vec = rownames(cells_citeseq_mtx)[67:70],
-#      return.stats = TRUE
-#    )
-#  
+library(dsb)
+result.list = 
+  DSBNormalizeProtein(
+    cell_protein_matrix = cells_citeseq_mtx[ ,1:50], 
+    empty_drop_matrix = empty_drop_citeseq_mtx, 
+    denoise.counts = TRUE, 
+    use.isotype.control = TRUE, 
+    isotype.control.name.vec = rownames(cells_citeseq_mtx)[67:70], 
+    return.stats = TRUE
+  )
+
 
 ## -----------------------------------------------------------------------------
-#  names(result.list)
+names(result.list)
 
 ## -----------------------------------------------------------------------------
-#  names(result.list$protein_stats)
+names(result.list$protein_stats)
 
 ## -----------------------------------------------------------------------------
-#  result.list$technical_stats %>% head
+head(result.list$technical_stats)
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  dsb_norm_prot = DSBNormalizeProtein(
