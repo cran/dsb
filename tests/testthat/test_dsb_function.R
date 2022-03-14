@@ -50,6 +50,27 @@ testthat::test_that(desc = "run dsb on example data", code = {
                                empty_drop_matrix = empty_drop_citeseq_mtx,
                                denoise.counts = FALSE, use.isotype.control = FALSE)
 
+  # test non default scaling
+  r2 =
+    DSBNormalizeProtein(cell_protein_matrix = cells_citeseq_mtx[ ,1:100],
+                         empty_drop_matrix = empty_drop_citeseq_mtx,
+                         define.pseudocount = TRUE,
+                         pseudocount.use = 5,
+                         use.isotype.control = TRUE,
+                         isotype.control.name.vec = rownames(cells_citeseq_mtx)[grepl(
+                           rownames(cells_citeseq_mtx), pattern = 'otyp')],
+                         quantile.clipping = TRUE, scale.factor = 'mean.subtract',
+                         return.stats = FALSE)
+  r2mean = mean(rowMeans(r2))
+  testthat::expect_lt(object = r2mean, 1)
+
+  # test mis-specified non-default scaling
+  testthat::expect_error(
+      DSBNormalizeProtein(cell_protein_matrix = cells_citeseq_mtx[ ,1:100],
+                          empty_drop_matrix = empty_drop_citeseq_mtx,
+                          scale.factor = 'not.an.option')
+  )
+
   # test output return value of function run on example data.
   testthat::expect_gt(object = mean(rowMeans(result)), 1)
 
@@ -76,4 +97,40 @@ testthat::test_that(desc = "run dsb on example data", code = {
   testthat::expect_equal(nrow(normprot), expected = 87)
   testthat::expect_gt(object = mean(rowMeans(normprot)), 1)
 
+  #######################################################
+  # test ModelNegativeADTnorm
+  result =
+    ModelNegativeADTnorm(cell_protein_matrix = cells_citeseq_mtx[ ,1:100],
+                       define.pseudocount = TRUE,
+                       pseudocount.use = 5,
+                       use.isotype.control = TRUE,
+                       isotype.control.name.vec = rownames(cells_citeseq_mtx)[grepl(
+                         rownames(cells_citeseq_mtx), pattern = 'otyp')],
+                       quantile.clipping = TRUE,
+                       quantile.clip = c(0.0001, 0.9999),
+                       return.stats = TRUE
+                       )
+  testthat::expect_type(object = result, type = 'list')
+  normprot = result$dsb_normalized_matrix
+  testthat::expect_equal(ncol(normprot), expected = 100)
+  testthat::expect_equal(nrow(normprot), expected = 87)
+  testthat::expect_gt(object = mean(rowMeans(normprot)), 0.1)
+
+  # simple implementation of ModelNegativeADTnorm
+  result =ModelNegativeADTnorm(cell_protein_matrix = cells_citeseq_mtx[ ,1:100], denoise.counts = FALSE)
+  normprot = result
+  testthat::expect_equal(ncol(normprot), expected = 100)
+  testthat::expect_equal(nrow(normprot), expected = 87)
+  testthat::expect_gt(object = mean(rowMeans(normprot)), 0.1)
+
+  # mu1 denoising implementation of ModelNegativeADTnorm
+  testthat::expect_warning(
+    ModelNegativeADTnorm(cell_protein_matrix = cells_citeseq_mtx[ ,1:50],
+                         denoise.counts = TRUE,
+                         use.isotype.control = FALSE)
+  )
+
+
+
 })
+

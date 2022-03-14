@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Matt Mulè" />
+
+
+<title>Additional Topics - qualtile.clipping - scale.factor - Python and Bioc - multiplexing - multi batch - FAQ</title>
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+<style type="text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Additional Topics - qualtile.clipping - scale.factor - Python and Bioc - multiplexing - multi batch - FAQ</h1>
+<h4 class="author">Matt Mulè</h4>
+
+</div>
+
+
+<p>This vignette provides additional information on dsb for the topics below:</p>
+<ol style="list-style-type: decimal">
+<li><a href="#bioconductor">Integrating dsb with Bioconductor</a></li>
+<li><a href="#scanpy">Integrating dsb with python/Scanpy</a></li>
+<li><a href="#noisotype">Using dsb with data lacking isotype controls</a></li>
+<li><a href="#multiplexing">Integrating dsb with sample multiplexing experiments</a></li>
+<li><a href="#advanced">advanced usage - return internal stats used by dsb</a><br />
+</li>
+<li><a href="#outliers">outlier clipping with the quantile.clipping argument</a></li>
+<li><a href="#scale">using a different background scaling method</a><br />
+</li>
+<li><a href="#faq">Frequently Asked Questions</a></li>
+</ol>
+<div id="integrating-dsb-with-bioconductor" class="section level2">
+<h2>Integrating dsb with Bioconductor <a name="bioconductor"></a></h2>
+<p>Rather than Seurat you may wish to use the SingleCellExperiment class to use Bioconductor packages. To use Bioconductor’s semantics, we store raw protein values in an ‘alternative Experiment’ in a SingleCellExperiment object containing RNA counts.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(SingleCellExperiment))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">sce =<span class="st"> </span><span class="kw">SingleCellExperiment</span>(<span class="dt">assays =</span> <span class="kw">list</span>(<span class="dt">counts =</span> cell.rna.raw), <span class="dt">colData =</span> cellmd)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># define the dsb normalized values as logcounts to use a common SingleCellExperiment / Bioconductor convention</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">adt =<span class="st"> </span><span class="kw">SummarizedExperiment</span>(</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="dt">assays =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="st">'counts'</span> =<span class="st"> </span><span class="kw">as.matrix</span>(cell.adt.raw),</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="st">'logcounts'</span> =<span class="st"> </span><span class="kw">as.matrix</span>(cell.adt.dsb)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    )</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  )</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">altExp</span>(sce, <span class="st">&quot;CITE&quot;</span>) =<span class="st"> </span>adt</a></code></pre></div>
+</div>
+<div id="using-dsb-in-python" class="section level2">
+<h2>Using dsb in Python <a name="scanpy"></a></h2>
+<p>NEW: Python users are encouraged to checkout the <code>muon</code> python multimodal framework to use dsb from within python <a href="https://muon.readthedocs.io/en/latest/index.html">about muon</a> <a href="https://muon.readthedocs.io/en/latest/omics/citeseq.html">dsb wrapper for python in muon</a></p>
+<p>dsb is available directly from within muon, for example see the snippet below from muon documentation</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="im">import</span> scanpy <span class="im">as</span> sc</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="im">import</span> muon <span class="im">as</span> mu</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="im">from</span> muon <span class="im">import</span> prot <span class="im">as</span> pt</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># see muon documentation for example and data</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">mdata <span class="op">=</span> mu.read_10x_mtx(os.path.join(data_dir, <span class="st">&quot;filtered_feature_bc_matrix&quot;</span>))</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">mdata_raw <span class="op">=</span> mu.read_10x_mtx(os.path.join(data_dir, <span class="st">&quot;raw_feature_bc_matrix&quot;</span>))</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">prot <span class="op">=</span> mdata.mod[<span class="st">'prot'</span>]</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">pt.pp.dsb(mdata, raw<span class="op">=</span>mdata_raw, empty_droplets<span class="op">=</span>droplets)</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">isotypes <span class="op">=</span> mdata_raw[<span class="st">'prot'</span>].var_names[<span class="dv">29</span>:<span class="dv">32</span>].values isotypes</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">pt.pp.dsb(mdata, mdata_raw, empty_counts_range<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">2.8</span>), isotype_controls<span class="op">=</span>isotypes, random_state<span class="op">=</span><span class="dv">1</span>)</a></code></pre></div>
+<p>You can also use dsb normalized values with the AnnData class in Python by using reticulate to create the AnnData object from dsb denoised and normalized protein values as well as raw RNA data. Anndata are not structured as separate assays; we therefore need to merge the RNA and protein data – this is a shortcoming that muon solves so users are again encouraged to use muon. See the current <a href="https://scanpy-tutorials.readthedocs.io/en/latest/cite-seq/pbmc5k.html">Scanpy CITE-seq workflow</a> and more on <a href="https://theislab.github.io/scanpy-in-R/">interoperability between Scanpy Bioconductor and Seurat</a></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(reticulate); sc =<span class="st"> </span><span class="kw">import</span>(<span class="st">&quot;scanpy&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># merge dsb-normalized protein and raw RNA data </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">combined_dat =<span class="st"> </span><span class="kw">rbind</span>(cell.rna.raw, cell.adt.dsb)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">s[[<span class="st">&quot;combined_data&quot;</span>]] =<span class="st"> </span><span class="kw">CreateAssayObject</span>(<span class="dt">data =</span> combined_dat)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># create Anndata Object </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">adata_seurat =<span class="st"> </span>sc<span class="op">$</span><span class="kw">AnnData</span>(</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">X   =</span> <span class="kw">t</span>(<span class="kw">GetAssayData</span>(s,<span class="dt">assay =</span> <span class="st">&quot;combined_data&quot;</span>)),</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="dt">obs =</span> seurat<span class="op">@</span>meta.data,</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="dt">var =</span> <span class="kw">GetAssay</span>(seurat)[[]]</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    )</a></code></pre></div>
+</div>
+<div id="using-dsb-with-data-lacking-isotype-controls" class="section level2">
+<h2>Using dsb with data lacking isotype controls <a name="noisotype"></a></h2>
+<p>If isotype controls are not included, you can run dsb correcting ambient background without cell denoising. We only recommend setting <code>denoise.counts = FALSE</code> if isotype controls were not included in the experiment which results in <em>not</em> defining the technical component of each cell’s protein library. The values of the normalized matrix returned are the number of standard deviations above the expected ambient noise captured by empty droplets.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># suggested workflow if isotype controls are not included </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">dsb_rescaled =<span class="st"> </span><span class="kw">DSBNormalizeProtein</span>(<span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">                                   <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">                                   <span class="co"># do not denoise each cell's technical component</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">                                   <span class="dt">denoise.counts =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>We strongly recommend using isotype controls, however if these are not available, the background mean for each cell inferred via a per-cell gaussian mixture model (µ1) can theoretically be used alone to define the cell’s technical component, however this assumes the background mean has no expected biological variation. In our data the background mean had weak but significant correlation with the foreground mean (µ2) across single cells (see the paper). Isotype controls anchor the component of the background mean associated with noise.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">dsb_rescaled =<span class="st"> </span>dsb<span class="op">::</span><span class="kw">DSBNormalizeProtein</span>(<span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                                        <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                                        <span class="co"># denoise with background mean only </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                                        <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">                                        <span class="dt">use.isotype.control =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+</div>
+<div id="using-dsb-with-sample-multiplexing-experiments" class="section level2">
+<h2>Using dsb with sample multiplexing experiments <a name="multiplexing"></a></h2>
+<p>In multiplexing experiments with cell superloading, demultiplexing functions define a “negative” cell population which can then be used to define background droplets for dsb. Multiplexing / Demultiplexing methods and functions compatible with dsb:<br />
+<a href="https://satijalab.org/seurat/v3.1/hashing_vignette.html">HTODemux (Seurat)</a><br />
+<a href="https://github.com/chris-mcginnis-ucsf/MULTI-seq">deMULTIplex (Multiseq)</a><br />
+<a href="https://github.com/statgen/demuxlet">demuxlet</a></p>
+<p>In our data, dsb normalized values were nearly identically distributed when dsb was run with background defined by demultiplexing functions or protein library size (see the paper).</p>
+<p>Note– we must load the <strong>raw</strong> output from cell ranger! This is essential; the filtered output are the cells estimated by Cell Ranger. there is not sufficient background in the filtered output for demultiplexing functions like <code>HTODemux</code> which need a negative population and that’s the population of droplets needed by dsb to estimate the ambient component. A good way to use demultiplexing with dsb and improve your demultiplexing calls is to use the <code>min.genes</code> argument in the <code>Seurat::Read10X</code> function to partially threshold out some background drops yet still retain sufficient (often &gt; 80,000 droplets per 10X lane depending on experiment) from which to estimate the background. This balances memory strain when demultiplexing tens of thousands of cells with requirements of the <code>Seurat::HTODemux</code> function to have sufficient empty drops to estimate the background population of each Hash antibody. <strong>Increasing the number of drops used in demultiplexing will result in more droplets defined by the function as “negative” which can increase the confidence in the estimate of background used by dsb</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># raw = Read10X see above -- path to cell ranger outs/raw_feature_bc_matrix ; </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># partial thresholding to slightly subset negative drops include all with 5 unique mRNAs</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">seurat_object =<span class="st"> </span><span class="kw">CreateSeuratObject</span>(raw, <span class="dt">min.genes =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co"># demultiplex (positive.quantile can be tuned to dataset depending on size)</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">seurat_object =<span class="st"> </span><span class="kw">HTODemux</span>(seurat_object, <span class="dt">assay =</span> <span class="st">&quot;HTO&quot;</span>, <span class="dt">positive.quantile =</span> <span class="fl">0.99</span>)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="kw">Idents</span>(seurat_object) =<span class="st"> &quot;HTO_classification.global&quot;</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co"># subset empty drop/background and cells </span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">neg_object =<span class="st"> </span><span class="kw">subset</span>(seurat_object, <span class="dt">idents =</span> <span class="st">&quot;Negative&quot;</span>)</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">singlet_object =<span class="st"> </span><span class="kw">subset</span>(seurat_object, <span class="dt">idents =</span> <span class="st">&quot;Singlet&quot;</span>)</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## (QC the negative object to filter out cells with high RNA content)</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co"># quick example below, different crteria can be used</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co"># this step depends on dataset; see main vignette for more principled filtering </span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">neg_object =<span class="st"> </span><span class="kw">subset</span>(seurat_object, <span class="dt">idents =</span> <span class="st">&quot;Negative&quot;</span>, nGene <span class="op">&lt;</span><span class="st"> </span><span class="dv">80</span>)</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co"># non sparse CITEseq data store more efficiently in a regular matrix</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21">neg_adt_matrix =<span class="st"> </span><span class="kw">GetAssayData</span>(neg_object, <span class="dt">assay =</span> <span class="st">&quot;CITE&quot;</span>, <span class="dt">slot =</span> <span class="st">'counts'</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">positive_adt_matrix =<span class="st"> </span><span class="kw">GetAssayData</span>(singlet_object, <span class="dt">assay =</span> <span class="st">&quot;CITE&quot;</span>, <span class="dt">slot =</span> <span class="st">'counts'</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</a>
+<a class="sourceLine" id="cb6-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co"># normalize the data with dsb</span></a>
+<a class="sourceLine" id="cb6-25" data-line-number="25">dsb_norm_prot =<span class="st"> </span><span class="kw">DSBNormalizeProtein</span>(</a>
+<a class="sourceLine" id="cb6-26" data-line-number="26">                           <span class="dt">cell_protein_matrix =</span> cells_mtx_rawprot,</a>
+<a class="sourceLine" id="cb6-27" data-line-number="27">                           <span class="dt">empty_drop_matrix =</span> negative_mtx_rawprot,</a>
+<a class="sourceLine" id="cb6-28" data-line-number="28">                           <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-29" data-line-number="29">                           <span class="dt">use.isotype.control =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-30" data-line-number="30">                           <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(cells_mtx_rawprot)[<span class="dv">30</span><span class="op">:</span><span class="dv">32</span>])</a>
+<a class="sourceLine" id="cb6-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb6-32" data-line-number="32"><span class="co"># now add the normalized dat back to the object (the singlets defined above as &quot;object&quot;)</span></a>
+<a class="sourceLine" id="cb6-33" data-line-number="33">singlet_object[[<span class="st">&quot;CITE&quot;</span>]] =<span class="st"> </span><span class="kw">CreateAssayObject</span>(<span class="dt">data =</span> dsb_norm_prot)</a>
+<a class="sourceLine" id="cb6-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb6-35" data-line-number="35"><span class="co"># proceed with same tutorial workflow shown above. </span></a></code></pre></div>
+</div>
+<div id="advanced-usage---return-internal-stats-used-by-dsb" class="section level2">
+<h2>Advanced usage - return internal stats used by dsb <a name="advanced"></a></h2>
+<p>If you want to look at internal stats calculated by dsb you can do so by setting <code>return.stats = TRUE</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(dsb)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">result.list =<span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">DSBNormalizeProtein</span>(</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>], </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    <span class="dt">use.isotype.control =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>], </a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="dt">return.stats =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">  )</a></code></pre></div>
+<p>The results are provided as a list</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">names</span>(result.list)</a></code></pre></div>
+<p>Different protein level stats available:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">names</span>(result.list<span class="op">$</span>protein_stats)</a></code></pre></div>
+<p>We can extract the dsb technical component from this list for example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">result.list<span class="op">$</span>technical_stats <span class="op">%&gt;%</span><span class="st"> </span>head </a></code></pre></div>
+</div>
+<div id="outlier-clipping-with-the-quantile.clipping-argument" class="section level2">
+<h2>outlier clipping with the quantile.clipping argument <a name="outliers"></a></h2>
+<p>By default setting <code>quanitle.clipping = TRUE</code> sets cells values for a given protein above the 99.95th percentile or below the 0.1 percentile of that protein’s expression to be thees quantile values. That value is optimized to remove a few high and low magnitude outliers but can be set to adapt to the number of cells in the dataset.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">dsb_norm_prot =<span class="st"> </span><span class="kw">DSBNormalizeProtein</span>(</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">                           <span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx,</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">                           <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx,</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">                           <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">                           <span class="dt">use.isotype.control =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">                           <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>],</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">                           <span class="co"># implement Quantile clipping </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">                           <span class="dt">quantile.clipping =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">                           <span class="co"># high and low otlier quantile across proteins to clip</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">                           <span class="co"># the `quantile.clip` parameter can be adjusted: </span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">                           <span class="dt">quantile.clip =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.9995</span>) </a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">                           )</a></code></pre></div>
+</div>
+<div id="using-a-different-background-scaling-method" class="section level2">
+<h2>Using a different background scaling method <a name="scale"></a></h2>
+<p>To enable subtraction of the ambient background mean without dividing by the ambient background standard deviation, one can set <code>scale.factor = 'mean.subtract'</code>. This method may be more appropriate for datasets staining with very large panels with lowly titrated antibodies. Can be used if the range of values for some proteins looks vary large or if minimal background detected.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">dsb_norm_prot =<span class="st"> </span><span class="kw">DSBNormalizeProtein</span>(</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">                           <span class="dt">cell_protein_matrix =</span> cells_citeseq_mtx,</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">                           <span class="dt">empty_drop_matrix =</span> empty_drop_citeseq_mtx,</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">                           <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">                           <span class="dt">use.isotype.control =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">                           <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>],</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">                           <span class="dt">quantile.clipping =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">                           <span class="dt">scale.factor =</span> <span class="st">'mean.subtract'</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">                           )</a></code></pre></div>
+</div>
+<div id="frequently-asked-questions" class="section level2">
+<h2>Frequently Asked Questions <a name="faq"></a></h2>
+<p><strong>I get the error “Error in quantile.default(x, seq(from = 0, to = 1, length = n)): missing values and NaN’s not allowed if ‘na.rm’ is FALSE” What should I do?</strong> - This error occurs during denoising, (denoise = TRUE) when you have antibodies with 0 counts or close to 0 across <em>all cells</em>. To get rid of this error, check the distributions of the antibodies with e.g. <code>apply(cells_protein_matrix, 1, quantile)</code> to find the protein(s) with basically no counts, then remove these from BOTH the empty drops and the cells. Please refer to these links:<br />
+<a href="https://github.com/niaid/dsb/issues/6" class="uri">https://github.com/niaid/dsb/issues/6</a><br />
+<a href="https://github.com/niaid/dsb/issues/26" class="uri">https://github.com/niaid/dsb/issues/26</a></p>
+<p><strong>I am getting a memory limit error when I use dsb</strong><br />
+This is likely becaues you are using too many barcodes in the negative population–please follow the vignette; if you are using Cell Ranger counts the raw barcode matrix is all the theoretical barcides, you need to narrow in on the barcodes for which you have empty drops that captured ADT and cell containing droplets.</p>
+<p><strong>I get a &quot;problem too large or memory exhausted error when I try to convert to a regular R matrix</strong> - See above and see issue 10 on the dsb github. CITE-seq protein counts don’t need a sparse representation-very likely this error is because there are too many negative droplets defined (i.e. over 1 million). You should be able to normalize datasets with 100,000+ cells and similar numbers of negative droplets (or less) on a normal 16GB laptop. By further narrowing in on the major background distribution, one should be able to convert the cells and background to a normal R matrix which should run successfully.<br />
+<a href="https://github.com/niaid/dsb/issues/10" class="uri">https://github.com/niaid/dsb/issues/10</a></p>
+<p><strong>the range of dsb normalized values is large is this normal?</strong> In nearly all cases encountered thus far, the large range of values for a protein (e.g. ranging from -50 to 50) are caused by just a few outlier cells, most often a few cells with low negative values for the protein. We have now provided a quantile clipping option in dsb to address these outlier cells. Users can also investigate these cells to see if they have very high values for isotype control proteins and they can possibly be removed from the dataset. <a href="https://github.com/niaid/dsb/issues/22" class="uri">https://github.com/niaid/dsb/issues/22</a><br />
+<a href="https://github.com/niaid/dsb/issues/9" class="uri">https://github.com/niaid/dsb/issues/9</a></p>
+<div id="check-for-outliers-in-dsb-normalized-values" class="section level3">
+<h3>check for outliers in dsb normalized values</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># find outliers </span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">pheatmap<span class="op">::</span><span class="kw">pheatmap</span>(<span class="kw">apply</span>(dsb_norm_prot, <span class="dv">1</span>, <span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="kw">quantile</span>(x,<span class="kw">c</span>(<span class="fl">0.9999</span>, <span class="fl">0.99</span>, <span class="fl">0.98</span>, <span class="fl">0.95</span>, <span class="fl">0.0001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>))</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">  }))</a></code></pre></div>
+<p>We can address this by clipping the max and min values as above in the quantile clipping section.</p>
+<p><strong>What are the minimum number of proteins required to use dsb</strong> dsb is compatible with datasets with any number of proteins with step I alone. To remove ambient background noise simply set <code>denoise.counts = FALSE</code>. We have validated the algorithm assumptions on datasets with 14 phenotyping antibodies and 3 isotype controls. With less proteins than this, we recommend users return the internal stats calculated by dsb and check correlations of the variables as shown below. If these values are reasonably correlated, it indicates the model assumptions of dsb could be valid.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">dsb_object =<span class="st"> </span><span class="kw">DSBNormalizeProtein</span>(<span class="dt">cell_protein_matrix =</span> dsb<span class="op">::</span>cells_citeseq_mtx, </a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">                                 <span class="dt">empty_drop_matrix =</span> dsb<span class="op">::</span>empty_drop_citeseq_mtx,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">                                 <span class="dt">denoise.counts =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">                                 <span class="dt">isotype.control.name.vec =</span> <span class="kw">rownames</span>(dsb<span class="op">::</span>cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>], </a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">                                 <span class="dt">return.stats =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">d =<span class="st"> </span><span class="kw">as.data.frame</span>(dsb_object<span class="op">$</span>dsb_stats)</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co"># test correlation of background mean with the inferred dsb technical component </span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw">cor</span>(d<span class="op">$</span>cellwise_background_mean, d<span class="op">$</span>dsb_technical_component)</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co"># test average isotype control value correlation with the background mean </span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">isotype_names =<span class="st"> </span><span class="kw">rownames</span>(dsb<span class="op">::</span>cells_citeseq_mtx)[<span class="dv">67</span><span class="op">:</span><span class="dv">70</span>]</a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="kw">cor</span>(<span class="kw">rowMeans</span>(d[,isotype_names]), d<span class="op">$</span>cellwise_background_mean)</a></code></pre></div>
+<p><strong>How do I know whether I should set the denoise.counts argument to TRUE vs FALSE?</strong><br />
+In the vast majority of cases we recommend setting <code>denoise.counts = TRUE</code> and <code>use.isotype.control = TRUE</code> (this is the package default). The only reason not to use this argument is if the model assumptions used to define the technical component are not expected to be met by the particular experiment: with <code>denoise.counts = TRUE</code> dsb models the negative protein population (µ1) for each cell with a two-component Gaussian mixture, making the conservative assumption that cells in the experiment should be negative for a subset of the measured proteins. If you expect all cells in your experiment be positive for all of the proteins measured, this may not be an optimal assumption. Model assumptions were validated on datasets measuring less than 20 to more than 200 proteins.</p>
+<p><strong>I have multiple “lanes” of 10X data from the same pool of cells, how should I run the workflow above?</strong></p>
+<p>Droplets derived from the same pool of stained cells partitioned across multiple lanes should ideally be normalized together, though pooling background droplets derived from independent staining reactions may still produce good results if the same staining panel was used with the same experimental conditions. To do this, you should merge the raw output of each lane, then run step 1 in the workflow-note that since the cell barcode names are the same for each lane in the raw output, you need to add a string to each barcode to identify the lane of origin to make the barcodes have unique names; here is one way to do that: First, add each 10X lane <em>raw</em> output from Cell Ranger into a separate directory in a folder “data”<br />
+data.<br />
+|_10xlane1<br />
+  |_outs<br />
+    |_raw_feature_bc_matrix<br />
+|_10xlane2<br />
+  |_outs<br />
+    |_raw_feature_bc_matrix</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(Seurat) <span class="co"># for Read10X helper function</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co"># path_to_reads = here(&quot;data/&quot;)</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">umi.files =<span class="st"> </span><span class="kw">list.files</span>(path_to_reads, <span class="dt">full.names=</span>T, <span class="dt">pattern =</span> <span class="st">&quot;10x&quot;</span> )</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">umi.list =<span class="st"> </span><span class="kw">lapply</span>(umi.files, <span class="cf">function</span>(x) <span class="kw">Read10X</span>(<span class="dt">data.dir =</span> <span class="kw">paste0</span>(x,<span class="st">&quot;/outs/raw_feature_bc_matrix/&quot;</span>)))</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">prot =<span class="st"> </span>rna =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(umi.list)) {</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">  prot[[i]] =<span class="st"> </span>umi.list[[i]]<span class="st">`</span><span class="dt">Antibody Capture</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">  rna[[i]] =<span class="st"> </span>umi.list[[i]]<span class="st">`</span><span class="dt">Gene Expression</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">  <span class="kw">colnames</span>(prot[[i]]) =<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">colnames</span>(prot[[i]]),<span class="st">&quot;_&quot;</span>, i )</a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">  <span class="kw">colnames</span>(rna[[i]]) =<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">colnames</span>(rna[[i]]),<span class="st">&quot;_&quot;</span>, i )</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">}  </a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">prot =<span class="st"> </span><span class="kw">do.call</span>(cbind, prot)</a>
+<a class="sourceLine" id="cb15-14" data-line-number="14">rna =<span class="st"> </span><span class="kw">do.call</span>(cbind, rna)</a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co"># proceed with step 1 in tutorial - define background and cell containing drops for dsb</span></a></code></pre></div>
+<p><strong>I have 2 batches, should I combine them into a single batch or normalize each batch separately?</strong> - (See issue 12 on the dsb github) How much batch variation there is depends on how much experiment-specific and expected biological variability there is between the batches. In the dataset used in the preprint, if we normalized with all background drops and cells in a single normalization, the resulting dsb normalized values were highly concordant with when we normalized each batch separately, this held true with either definition of background drops used (i.e. based on thresholding with the library size or based on hashing-see below). One could try both and see which mitigates the batch variation the most. See <a href="https://github.com/niaid/dsb/issues/12" class="uri">https://github.com/niaid/dsb/issues/12</a> for example code. If there are significant batch to batch variations from an experiment with the same antobidy panel on the same type of cells, we recommend starting out with simple linear model based correction with limma as a starting point (type ?limma::removeBatchEffect into R console for more information).</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
