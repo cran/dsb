@@ -194,34 +194,6 @@ knitr::opts_chunk$set(
 #                     fontsize_row = 8, border_color = NA)
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
-#  clusters = c(0:13)
-#  celltype = c("CD4_Tcell_Memory", # 0
-#               "CD14_Monocytes", #1
-#               "CD14_Monocytes_Activated", #2
-#               "CD4_Naive_Tcell", #3
-#               "B_Cells", #4
-#               "NK_Cells", #5
-#               "CD4_Naive_Tcell_CD62L+", #6
-#               "CD8_Memory_Tcell", #7
-#               "DC", #8
-#               "CD8_Naive_Tcell", #9
-#               "CD4_Effector", #10
-#               "CD16_Monocyte", #11
-#               "DOUBLETS", #12
-#               "DoubleNegative_Tcell" #13
-#  )
-#  
-#  s@meta.data$celltype = plyr::mapvalues(
-#    x = s@meta.data$CITE_snn_res.1,
-#    from = clusters,  to = celltype
-#    )
-#  
-#  # # optional -- dimensionality reduction plot
-#  # Seurat::DimPlot(s, reduction = 'umap', group.by = 'celltype',
-#  #               label = TRUE, repel = TRUE, label.size = 2.5, pt.size = 0.1) +
-#  #   theme_bw() + NoLegend() + ggtitle('dsb normalized protein')
-
 ## -----------------------------------------------------------------------------
 #  # use pearson residuals as normalized values for pca
 #  DefaultAssay(s) = "RNA"
