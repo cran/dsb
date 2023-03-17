@@ -28,24 +28,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
 });
 </script>
 
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
-
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
@@ -62,55 +46,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -133,9 +116,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+<style type="text/css">
+pre:not([class]) {
+background-color: white;
+}
+</style>
 
 
-
+<style type="text/css">
+h1 {
+font-size: 34px;
+}
+h1.title {
+font-size: 38px;
+}
+h2 {
+font-size: 30px;
+}
+h3 {
+font-size: 24px;
+}
+h4 {
+font-size: 18px;
+}
+h5 {
+font-size: 16px;
+}
+h6 {
+font-size: 12px;
+}
+.table th:not([align]) {
+text-align: left;
+}
+</style>
 
 <style type="text/css">body {
 background-color: #fff;
@@ -323,27 +336,28 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <style type="text/css">
 .main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
+max-width: 940px;
+margin-left: auto;
+margin-right: auto;
+}
+code {
+color: inherit;
+background-color: rgba(0, 0, 0, 0.04);
 }
 img {
-  max-width:100%;
+max-width:100%;
 }
 .tabbed-pane {
-  padding-top: 12px;
+padding-top: 12px;
 }
 .html-widget {
-  margin-bottom: 20px;
+margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
-  outline: none;
+outline: none;
 }
 summary {
-  display: list-item;
-}
-pre code {
-  padding: 0;
+display: list-item;
 }
 </style>
 
@@ -353,55 +367,49 @@ pre code {
 
 <style type="text/css">
 .tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+display: inline-table;
+max-height: 500px;
+min-height: 44px;
+overflow-y: auto;
+background: white;
+border: 1px solid #ddd;
+border-radius: 4px;
 }
-
 .tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
-
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "";
-  border: none;
+content: "";
+border: none;
 }
-
 .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
-
 .tabset-dropdown > .nav-tabs > li.active {
-  display: block;
+display: block;
 }
-
 .tabset-dropdown > .nav-tabs > li > a,
 .tabset-dropdown > .nav-tabs > li > a:focus,
 .tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
+border: none;
+display: inline-block;
+border-radius: 4px;
+background-color: transparent;
 }
-
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
+display: block;
+float: none;
 }
-
 .tabset-dropdown > .nav-tabs > li {
-  display: none;
+display: none;
 }
 </style>
 
@@ -420,7 +428,7 @@ pre code {
 
 
 
-<div id="header">
+<div class="fluid-row" id="header">
 
 
 
@@ -491,9 +499,8 @@ snippet below from muon documentation</p>
 Python by using reticulate to create the AnnData object from dsb
 denoised and normalized protein values as well as raw RNA data. Anndata
 are not structured as separate assays; we therefore need to merge the
-RNA and protein data – this is a shortcoming that muon solves so users
-are again encouraged to use muon. See the current <a href="https://scanpy-tutorials.readthedocs.io/en/latest/cite-seq/pbmc5k.html">Scanpy
-CITE-seq workflow</a> and more on <a href="https://theislab.github.io/scanpy-in-R/">interoperability between
+RNA and protein data into the same matrix.</p>
+<p>See <a href="https://theislab.github.io/scanpy-in-R/">interoperability between
 Scanpy Bioconductor and Seurat</a></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate); sc <span class="ot">=</span> <span class="fu">import</span>(<span class="st">&quot;scanpy&quot;</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -613,22 +620,20 @@ dsb</strong></p>
 <p>If you want to look at internal stats calculated by dsb you can do so
 by setting <code>return.stats = TRUE</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dsb)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; loaded dsb package version 1.0.2 please cite https://www.nature.com/articles/s41467-022-29356-8</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Package &#39;dsb&#39;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>result.list <span class="ot">=</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DSBNormalizeProtein</span>(</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>], </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">return.stats =</span> <span class="cn">TRUE</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;correcting ambient protein background noise&quot;</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;some proteins with low background variance detected check raw and normalized distributions.  protein stats can be returned with return.stats = TRUE&quot;</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CD185_PROT&quot;</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;fitting models to each cell for dsb technical component and removing cell to cell technical noise&quot;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;returning results in a list; normalized matrix accessed x$dsb_normalized_matrix&quot;</span></span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>result.list <span class="ot">=</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DSBNormalizeProtein</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>], </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">return.stats =</span> <span class="cn">TRUE</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;correcting ambient protein background noise&quot;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;some proteins with low background variance detected check raw and normalized distributions.  protein stats can be returned with return.stats = TRUE&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CD185_PROT&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;fitting models to each cell for dsb technical component and removing cell to cell technical noise&quot;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;returning results in a list; normalized matrix accessed x$dsb_normalized_matrix&quot;</span></span></code></pre></div>
 <p>The results are provided as a list</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(result.list)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dsb_normalized_matrix&quot; &quot;technical_stats&quot;       &quot;protein_stats&quot;</span></span></code></pre></div>
@@ -851,7 +856,7 @@ information).</p>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -869,7 +874,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
+    $(this).parent().toggleClass('nav-tabs-open')
   });
 });
 </script>

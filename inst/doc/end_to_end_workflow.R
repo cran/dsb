@@ -52,6 +52,13 @@ knitr::opts_chunk$set(
 #  
 
 ## ---- eval = FALSE------------------------------------------------------------
+#  ggplot(md, aes(x = log10(n.gene), y = prot.size )) +
+#     theme_bw() +
+#     geom_bin2d(bins = 300) +
+#     scale_fill_viridis_c(option = "C") +
+#     facet_wrap(~drop.class)
+
+## ---- eval = FALSE------------------------------------------------------------
 #  background_drops = rownames(
 #    md[ md$prot.size > 1.5 &
 #        md$prot.size < 3 &
