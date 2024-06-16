@@ -136,7 +136,7 @@ knitr::opts_chunk$set(
 #    isotype.control.name.vec = rownames(cell.adt.raw)[29:31],
 #    define.pseudocount = TRUE,
 #    pseudocount.use = 1,
-#    scale.factor = 'mean_subtract',
+#    scale.factor = 'mean.subtract',
 #    quantile.clipping = TRUE,
 #    quantile.clip = c(0.01, 0.99),
 #    return.stats = TRUE

@@ -28,8 +28,25 @@ document.addEventListener('DOMContentLoaded', function(e) {
 });
 </script>
 
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
@@ -102,13 +119,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -116,39 +140,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
   }
 })();
 </script>
-<style type="text/css">
-pre:not([class]) {
-background-color: white;
-}
-</style>
 
 
-<style type="text/css">
-h1 {
-font-size: 34px;
-}
-h1.title {
-font-size: 38px;
-}
-h2 {
-font-size: 30px;
-}
-h3 {
-font-size: 24px;
-}
-h4 {
-font-size: 18px;
-}
-h5 {
-font-size: 16px;
-}
-h6 {
-font-size: 12px;
-}
-.table th:not([align]) {
-text-align: left;
-}
-</style>
+
 
 <style type="text/css">body {
 background-color: #fff;
@@ -340,10 +334,6 @@ max-width: 940px;
 margin-left: auto;
 margin-right: auto;
 }
-code {
-color: inherit;
-background-color: rgba(0, 0, 0, 0.04);
-}
 img {
 max-width:100%;
 }
@@ -359,6 +349,12 @@ outline: none;
 summary {
 display: list-item;
 }
+details > summary > p:only-child {
+display: inline;
+}
+pre code {
+padding: 0;
+}
 </style>
 
 
@@ -371,27 +367,20 @@ display: inline-table;
 max-height: 500px;
 min-height: 44px;
 overflow-y: auto;
-background: white;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -428,7 +417,7 @@ display: none;
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -742,7 +731,7 @@ more about different parameters that can be used in dsb</p>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cell.adt.raw)[<span class="dv">29</span><span class="sc">:</span><span class="dv">31</span>],</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">define.pseudocount =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">pseudocount.use =</span> <span class="dv">1</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale.factor =</span> <span class="st">&#39;mean_subtract&#39;</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale.factor =</span> <span class="st">&#39;mean.subtract&#39;</span>,</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantile.clipping =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantile.clip =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>), </span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">return.stats =</span> <span class="cn">TRUE</span></span>
@@ -989,18 +978,18 @@ Additional vignettes are available on CRAN.</p>
 </div>
 <div id="some-recent-publications-using-dsb" class="section level3">
 <h3>Some recent publications using dsb <a name="pubications"></a></h3>
-<p>Publications from outside institutes<br />
-<a href="https://www.nature.com/articles/s41586-021-03929-x">Jardine et
-al. <em>Nature</em> (2021)</a><br />
-<a href="https://www.nature.com/articles/s41587-021-00927-2">Mimitou et.
-al <em>Nature Biotechnology</em> (2021)</a><br />
-<a href="https://www.cell.com/cell/pdf/S0092-8674(22)00070-8.pdf">COMBAT
-consortium et al. <em>Cell</em> (2022)</a></p>
-<p>Publications from the Tsang lab<br />
-<a href="https://www.nature.com/articles/s41591-020-0769-8">Kotliarov et
-al. <em>Nature Medicine</em> (2020)</a><br />
-<a href="https://www.cell.com/cell/pdf/S0092-8674(21)00168-9.pdf">Liu et
-al. <em>Cell</em> (2021)</a></p>
+<p>Publications from other investigators <br> <a href="https://doi.org/10.1038/s41586-024-07388-y">Izzo et
+al. <em>Nature</em> 2024</a> <br> <a href="https://doi.org/10.1016/j.cell.2023.04.007">Arieta et
+al. <em>Cell</em> 2023</a> <br> <a href="https://doi.org/10.1038/s41591-023-02345-0">Magen et
+al. <em>Nature Medicine</em> 2023</a> <br> <a href="https://doi.org/10.1016/j.cell.2022.01.012">COMBAT consortium
+<em>Cell</em> 2021</a> <br> <a href="https://doi.org/10.1038/s41586-021-03929-x">Jardine et
+al. <em>Nature</em> 2021</a> <br> <a href="https://doi.org/10.1038/s41587-021-00927-2">Mimitou et
+al. <em>Nature Biotechnology</em> 2021</a> <br></p>
+<p>Publications from the Tsang lab <br> <a href="https://mattpm.net/man/pdf/natural_adjuvant_immunity_2024.pdf">Mulè
+et al. <em>Immunity</em> 2024</a> <br> <a href="https://doi.org/10.1038/s41586-022-05670-5">Sparks et
+al. <em>Nature</em> 2023</a> <br> <a href="https://doi.org/10.1016/j.cell.2021.02.018">Liu et
+al. <em>Cell</em> 2021</a> <br> <a href="https://doi.org/10.1038/s41591-020-0769-8">Kotliarov et
+al. <em>Nature Medicine</em> 2020</a> <br></p>
 </div>
 <div id="using-other-alignment-algorithms" class="section level3">
 <h3>using other alignment algorithms <a name="otheraligners"></a></h3>
@@ -1077,7 +1066,7 @@ thresholding because this contains all droplets.</p>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -1095,7 +1084,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
