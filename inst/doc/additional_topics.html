@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -453,16 +453,16 @@ method</a><br />
 to use Bioconductor packages. To use Bioconductor’s semantics, we store
 raw protein values in an ‘alternative Experiment’ in a
 SingleCellExperiment object containing RNA counts.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(SingleCellExperiment))</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">=</span> <span class="fu">SingleCellExperiment</span>(<span class="at">assays =</span> <span class="fu">list</span>(<span class="at">counts =</span> cell.rna.raw), <span class="at">colData =</span> cellmd)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define the dsb normalized values as logcounts to use a common SingleCellExperiment / Bioconductor convention</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>adt <span class="ot">=</span> <span class="fu">SummarizedExperiment</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">assays =</span> <span class="fu">list</span>(</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;counts&#39;</span> <span class="ot">=</span> <span class="fu">as.matrix</span>(cell.adt.raw),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;logcounts&#39;</span> <span class="ot">=</span> <span class="fu">as.matrix</span>(cell.adt.dsb)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">altExp</span>(sce, <span class="st">&quot;CITE&quot;</span>) <span class="ot">=</span> adt</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(SingleCellExperiment))</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>sce <span class="ot">=</span> <span class="fu">SingleCellExperiment</span>(<span class="at">assays =</span> <span class="fu">list</span>(<span class="at">counts =</span> cell.rna.raw), <span class="at">colData =</span> cellmd)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># define the dsb normalized values as logcounts to use a common SingleCellExperiment / Bioconductor convention</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>adt <span class="ot">=</span> <span class="fu">SummarizedExperiment</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">assays =</span> <span class="fu">list</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="st">&#39;counts&#39;</span> <span class="ot">=</span> <span class="fu">as.matrix</span>(cell.adt.raw),</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="st">&#39;logcounts&#39;</span> <span class="ot">=</span> <span class="fu">as.matrix</span>(cell.adt.dsb)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    )</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  )</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">altExp</span>(sce, <span class="st">&quot;CITE&quot;</span>) <span class="ot">=</span> adt</span></code></pre></div>
 </div>
 <div id="using-dsb-in-python" class="section level2">
 <h2>Using dsb in Python <a name="scanpy"></a></h2>
@@ -472,18 +472,18 @@ python multimodal framework to use dsb from within python <a href="https://muon.
 wrapper for python in muon</a></p>
 <p>dsb is available directly from within muon, for example see the
 snippet below from muon documentation</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scanpy <span class="im">as</span> sc</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> muon <span class="im">as</span> mu</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> muon <span class="im">import</span> prot <span class="im">as</span> pt</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># see muon documentation for example and data</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>mdata <span class="op">=</span> mu.read_10x_mtx(os.path.join(data_dir, <span class="st">&quot;filtered_feature_bc_matrix&quot;</span>))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>mdata_raw <span class="op">=</span> mu.read_10x_mtx(os.path.join(data_dir, <span class="st">&quot;raw_feature_bc_matrix&quot;</span>))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>prot <span class="op">=</span> mdata.mod[<span class="st">&#39;prot&#39;</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pt.pp.dsb(mdata, raw<span class="op">=</span>mdata_raw, empty_droplets<span class="op">=</span>droplets)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>isotypes <span class="op">=</span> mdata_raw[<span class="st">&#39;prot&#39;</span>].var_names[<span class="dv">29</span>:<span class="dv">32</span>].values isotypes</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>pt.pp.dsb(mdata, mdata_raw, empty_counts_range<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">2.8</span>), isotype_controls<span class="op">=</span>isotypes, random_state<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="im">import</span> scanpy <span class="im">as</span> sc</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="im">import</span> muon <span class="im">as</span> mu</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="im">from</span> muon <span class="im">import</span> prot <span class="im">as</span> pt</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># see muon documentation for example and data</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>mdata <span class="op">=</span> mu.read_10x_mtx(os.path.join(data_dir, <span class="st">&quot;filtered_feature_bc_matrix&quot;</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>mdata_raw <span class="op">=</span> mu.read_10x_mtx(os.path.join(data_dir, <span class="st">&quot;raw_feature_bc_matrix&quot;</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>prot <span class="op">=</span> mdata.mod[<span class="st">&#39;prot&#39;</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>pt.pp.dsb(mdata, raw<span class="op">=</span>mdata_raw, empty_droplets<span class="op">=</span>droplets)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>isotypes <span class="op">=</span> mdata_raw[<span class="st">&#39;prot&#39;</span>].var_names[<span class="dv">29</span>:<span class="dv">32</span>].values isotypes</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>pt.pp.dsb(mdata, mdata_raw, empty_counts_range<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">2.8</span>), isotype_controls<span class="op">=</span>isotypes, random_state<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
 <p>You can also use dsb normalized values with the AnnData class in
 Python by using reticulate to create the AnnData object from dsb
 denoised and normalized protein values as well as raw RNA data. Anndata
@@ -491,18 +491,18 @@ are not structured as separate assays; we therefore need to merge the
 RNA and protein data into the same matrix.</p>
 <p>See <a href="https://theislab.github.io/scanpy-in-R/">interoperability between
 Scanpy Bioconductor and Seurat</a></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate); sc <span class="ot">=</span> <span class="fu">import</span>(<span class="st">&quot;scanpy&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># merge dsb-normalized protein and raw RNA data </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>combined_dat <span class="ot">=</span> <span class="fu">rbind</span>(cell.rna.raw, cell.adt.dsb)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>s[[<span class="st">&quot;combined_data&quot;</span>]] <span class="ot">=</span> <span class="fu">CreateAssayObject</span>(<span class="at">data =</span> combined_dat)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create Anndata Object </span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>adata_seurat <span class="ot">=</span> sc<span class="sc">$</span><span class="fu">AnnData</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">X   =</span> <span class="fu">t</span>(<span class="fu">GetAssayData</span>(s,<span class="at">assay =</span> <span class="st">&quot;combined_data&quot;</span>)),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs =</span> seurat<span class="sc">@</span>meta.data,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">var =</span> <span class="fu">GetAssay</span>(seurat)[[]]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(reticulate); sc <span class="ot">=</span> <span class="fu">import</span>(<span class="st">&quot;scanpy&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># merge dsb-normalized protein and raw RNA data </span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>combined_dat <span class="ot">=</span> <span class="fu">rbind</span>(cell.rna.raw, cell.adt.dsb)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>s[[<span class="st">&quot;combined_data&quot;</span>]] <span class="ot">=</span> <span class="fu">CreateAssayObject</span>(<span class="at">data =</span> combined_dat)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># create Anndata Object </span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>adata_seurat <span class="ot">=</span> sc<span class="sc">$</span><span class="fu">AnnData</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">X   =</span> <span class="fu">t</span>(<span class="fu">GetAssayData</span>(s,<span class="at">assay =</span> <span class="st">&quot;combined_data&quot;</span>)),</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="at">obs =</span> seurat<span class="sc">@</span>meta.data,</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="at">var =</span> <span class="fu">GetAssay</span>(seurat)[[]]</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    )</span></code></pre></div>
 </div>
 <div id="using-dsb-with-data-lacking-isotype-controls" class="section level2">
 <h2>Using dsb with data lacking isotype controls
@@ -514,11 +514,11 @@ included in the experiment which results in <em>not</em> defining the
 technical component of each cell’s protein library. The values of the
 normalized matrix returned are the number of standard deviations above
 the expected ambient noise captured by empty droplets.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># suggested workflow if isotype controls are not included </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dsb_rescaled <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(<span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="co"># do not denoise each cell&#39;s technical component</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">denoise.counts =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># suggested workflow if isotype controls are not included </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>dsb_rescaled <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(<span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                                   <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                                   <span class="co"># do not denoise each cell&#39;s technical component</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>                                   <span class="at">denoise.counts =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>We strongly recommend using isotype controls, however if these are
 not available, the background mean for each cell inferred via a per-cell
 gaussian mixture model (µ1) can theoretically be used alone to define
@@ -527,12 +527,12 @@ has no expected biological variation. In our data the background mean
 had weak but significant correlation with the foreground mean (µ2)
 across single cells (see the paper). Isotype controls anchor the
 component of the background mean associated with noise.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dsb_rescaled <span class="ot">=</span> dsb<span class="sc">::</span><span class="fu">DSBNormalizeProtein</span>(<span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="co"># denoise with background mean only </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">use.isotype.control =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>dsb_rescaled <span class="ot">=</span> dsb<span class="sc">::</span><span class="fu">DSBNormalizeProtein</span>(<span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                                        <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                                        <span class="co"># denoise with background mean only </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>                                        <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>                                        <span class="at">use.isotype.control =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="using-dsb-with-sample-multiplexing-experiments" class="section level2">
 <h2>Using dsb with sample multiplexing experiments
@@ -567,93 +567,93 @@ drops to estimate the background population of each Hash antibody.
 result in more droplets defined by the function as “negative” which can
 increase the confidence in the estimate of background used by
 dsb</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># raw = Read10X see above -- path to cell ranger outs/raw_feature_bc_matrix ; </span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># partial thresholding to slightly subset negative drops include all with 5 unique mRNAs</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>seurat_object <span class="ot">=</span> <span class="fu">CreateSeuratObject</span>(raw, <span class="at">min.genes =</span> <span class="dv">5</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># demultiplex (positive.quantile can be tuned to dataset depending on size)</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>seurat_object <span class="ot">=</span> <span class="fu">HTODemux</span>(seurat_object, <span class="at">assay =</span> <span class="st">&quot;HTO&quot;</span>, <span class="at">positive.quantile =</span> <span class="fl">0.99</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(seurat_object) <span class="ot">=</span> <span class="st">&quot;HTO_classification.global&quot;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># subset empty drop/background and cells </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>neg_object <span class="ot">=</span> <span class="fu">subset</span>(seurat_object, <span class="at">idents =</span> <span class="st">&quot;Negative&quot;</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>singlet_object <span class="ot">=</span> <span class="fu">subset</span>(seurat_object, <span class="at">idents =</span> <span class="st">&quot;Singlet&quot;</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">## (QC the negative object to filter out cells with high RNA content)</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># quick example below, different crteria can be used</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># this step depends on dataset; see main vignette for more principled filtering </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>neg_object <span class="ot">=</span> <span class="fu">subset</span>(seurat_object, <span class="at">idents =</span> <span class="st">&quot;Negative&quot;</span>, nGene <span class="sc">&lt;</span> <span class="dv">80</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># non sparse CITEseq data store more efficiently in a regular matrix</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>neg_adt_matrix <span class="ot">=</span> <span class="fu">GetAssayData</span>(neg_object, <span class="at">assay =</span> <span class="st">&quot;CITE&quot;</span>, <span class="at">slot =</span> <span class="st">&#39;counts&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>positive_adt_matrix <span class="ot">=</span> <span class="fu">GetAssayData</span>(singlet_object, <span class="at">assay =</span> <span class="st">&quot;CITE&quot;</span>, <span class="at">slot =</span> <span class="st">&#39;counts&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># normalize the data with dsb</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>dsb_norm_prot <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cell_protein_matrix =</span> cells_mtx_rawprot,</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                           <span class="at">empty_drop_matrix =</span> negative_mtx_rawprot,</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                           <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                           <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                           <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_mtx_rawprot)[<span class="dv">30</span><span class="sc">:</span><span class="dv">32</span>])</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># now add the normalized dat back to the object (the singlets defined above as &quot;object&quot;)</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>singlet_object[[<span class="st">&quot;CITE&quot;</span>]] <span class="ot">=</span> <span class="fu">CreateAssayObject</span>(<span class="at">data =</span> dsb_norm_prot)</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># proceed with same tutorial workflow shown above. </span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># raw = Read10X see above -- path to cell ranger outs/raw_feature_bc_matrix ; </span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># partial thresholding to slightly subset negative drops include all with 5 unique mRNAs</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>seurat_object <span class="ot">=</span> <span class="fu">CreateSeuratObject</span>(raw, <span class="at">min.genes =</span> <span class="dv">5</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># demultiplex (positive.quantile can be tuned to dataset depending on size)</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>seurat_object <span class="ot">=</span> <span class="fu">HTODemux</span>(seurat_object, <span class="at">assay =</span> <span class="st">&quot;HTO&quot;</span>, <span class="at">positive.quantile =</span> <span class="fl">0.99</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="fu">Idents</span>(seurat_object) <span class="ot">=</span> <span class="st">&quot;HTO_classification.global&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># subset empty drop/background and cells </span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>neg_object <span class="ot">=</span> <span class="fu">subset</span>(seurat_object, <span class="at">idents =</span> <span class="st">&quot;Negative&quot;</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>singlet_object <span class="ot">=</span> <span class="fu">subset</span>(seurat_object, <span class="at">idents =</span> <span class="st">&quot;Singlet&quot;</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="do">## (QC the negative object to filter out cells with high RNA content)</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co"># quick example below, different crteria can be used</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># this step depends on dataset; see main vignette for more principled filtering </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>neg_object <span class="ot">=</span> <span class="fu">subset</span>(seurat_object, <span class="at">idents =</span> <span class="st">&quot;Negative&quot;</span>, nGene <span class="sc">&lt;</span> <span class="dv">80</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co"># non sparse CITEseq data store more efficiently in a regular matrix</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>neg_adt_matrix <span class="ot">=</span> <span class="fu">GetAssayData</span>(neg_object, <span class="at">assay =</span> <span class="st">&quot;CITE&quot;</span>, <span class="at">slot =</span> <span class="st">&#39;counts&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>positive_adt_matrix <span class="ot">=</span> <span class="fu">GetAssayData</span>(singlet_object, <span class="at">assay =</span> <span class="st">&quot;CITE&quot;</span>, <span class="at">slot =</span> <span class="st">&#39;counts&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co"># normalize the data with dsb</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>dsb_norm_prot <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>                           <span class="at">cell_protein_matrix =</span> cells_mtx_rawprot,</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>                           <span class="at">empty_drop_matrix =</span> negative_mtx_rawprot,</span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>                           <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>                           <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>                           <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_mtx_rawprot)[<span class="dv">30</span><span class="sc">:</span><span class="dv">32</span>])</span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co"># now add the normalized dat back to the object (the singlets defined above as &quot;object&quot;)</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>singlet_object[[<span class="st">&quot;CITE&quot;</span>]] <span class="ot">=</span> <span class="fu">CreateAssayObject</span>(<span class="at">data =</span> dsb_norm_prot)</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co"># proceed with same tutorial workflow shown above. </span></span></code></pre></div>
 </div>
 <div id="advanced-usage---return-internal-stats-used-by-dsb" class="section level2">
 <h2>Advanced usage - return internal stats used by dsb
 <a name="advanced"></a></h2>
 <p>If you want to look at internal stats calculated by dsb you can do so
 by setting <code>return.stats = TRUE</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dsb)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>result.list <span class="ot">=</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DSBNormalizeProtein</span>(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>], </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">return.stats =</span> <span class="cn">TRUE</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;correcting ambient protein background noise&quot;</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;some proteins with low background variance detected check raw and normalized distributions.  protein stats can be returned with return.stats = TRUE&quot;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CD185_PROT&quot;</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;fitting models to each cell for dsb technical component and removing cell to cell technical noise&quot;</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;returning results in a list; normalized matrix accessed x$dsb_normalized_matrix&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(dsb)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>result.list <span class="ot">=</span> </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">DSBNormalizeProtein</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], </span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx, </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>], </span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="at">return.stats =</span> <span class="cn">TRUE</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  )</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;correcting ambient protein background noise&quot;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;proteins below have low background log norm sd &lt; 0.05 check raw and normalized distributions.  protein stats can be returned with return.stats = TRUE&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CD185_PROT&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; [1] &quot;fitting models to each cell for dsb technical component and removing cell to cell technical noise&quot;</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; [1] &quot;returning results in a list; normalized matrix accessed x$dsb_normalized_matrix&quot;</span></span></code></pre></div>
 <p>The results are provided as a list</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(result.list)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dsb_normalized_matrix&quot; &quot;technical_stats&quot;       &quot;protein_stats&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">names</span>(result.list)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dsb_normalized_matrix&quot; &quot;technical_stats&quot;       &quot;protein_stats&quot;</span></span></code></pre></div>
 <p>Different protein level stats available:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(result.list<span class="sc">$</span>protein_stats)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;raw cell matrix stats&quot;       &quot;dsb normalized matrix stats&quot;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] &quot;background_mean&quot;             &quot;background_sd&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">names</span>(result.list<span class="sc">$</span>protein_stats)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;raw cell matrix stats&quot;       &quot;dsb normalized matrix stats&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; [3] &quot;background_mean&quot;             &quot;background_sd&quot;</span></span></code></pre></div>
 <p>We can also extract the dsb technical component and variables used to
 derive the technical component for example:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(result.list<span class="sc">$</span>technical_stats)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          MouseIgG1kappaisotype_PROT MouseIgG2akappaisotype_PROT</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2                  0.7409978                   2.1388457</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3                 -0.6802394                   1.4410413</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4                 -0.6802394                  -0.1319484</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6                 -0.6802394                  -0.1319484</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2                 -0.6802394                   1.4410413</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6                  0.7409978                  -1.0293939</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          Mouse IgG2bkIsotype_PROT RatIgG2bkIsotype_PROT</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2                2.0081678            -0.4511315</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3                0.1938776             0.7393731</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4               -0.8412382            -0.4511315</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6                0.1938776            -0.4511315</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2                0.1938776             0.7393731</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6               -0.8412382            -0.4511315</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          cellwise_background_mean dsb_technical_component</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2              0.424416035             -1.69894383</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3              0.129457815             -0.62075991</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4              0.008699038              0.77617240</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6              0.239007906              0.30128399</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2             -0.170614869             -0.24429265</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6             -0.039058826             -0.06709057</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">head</span>(result.list<span class="sc">$</span>technical_stats)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;                          MouseIgG1kappaisotype_PROT MouseIgG2akappaisotype_PROT</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2                  0.7409978                   2.1388457</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3                 -0.6802394                   1.4410413</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4                 -0.6802394                  -0.1319484</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6                 -0.6802394                  -0.1319484</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2                 -0.6802394                   1.4410413</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6                  0.7409978                  -1.0293939</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;                          Mouse IgG2bkIsotype_PROT RatIgG2bkIsotype_PROT</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2                2.0081678            -0.4511315</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3                0.1938776             0.7393731</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4               -0.8412382            -0.4511315</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6                0.1938776            -0.4511315</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2                0.1938776             0.7393731</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6               -0.8412382            -0.4511315</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt;                          cellwise_background_mean dsb_technical_component</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; GAACGGATCGAATCCA_H1B1ln2              0.424416035             -1.69894383</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; ATAGACCAGTCCATAC_H1B1ln3              0.129457815             -0.62075991</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; GAAGCAGAGTATCTCG_H1B1ln4              0.008699038              0.77617240</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; CTACCCAAGCTACCGC_H1B1ln6              0.239007906              0.30128399</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; AGCCTAAAGGATATAC_H1B1ln2             -0.170614869             -0.24429265</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; CGGACTGGTCCGCTGA_H1B1ln6             -0.039058826             -0.06709057</span></span></code></pre></div>
 </div>
 <div id="outlier-clipping-with-the-quantile.clipping-argument" class="section level2">
 <h2>outlier clipping with the quantile.clipping argument
@@ -663,18 +663,18 @@ values for a given protein above the 99.95th percentile or below the 0.1
 percentile of that protein’s expression to be thees quantile values.
 That value is optimized to remove a few high and low magnitude outliers
 but can be set to adapt to the number of cells in the dataset.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dsb_norm_prot <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>],</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># implement Quantile clipping </span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">quantile.clipping =</span> <span class="cn">TRUE</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># high and low otlier quantile across proteins to clip</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># the `quantile.clip` parameter can be adjusted: </span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">quantile.clip =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.9995</span>) </span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                           )</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>dsb_norm_prot <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                           <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                           <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                           <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>                           <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>                           <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>],</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>                           <span class="co"># implement Quantile clipping </span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>                           <span class="at">quantile.clipping =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>                           <span class="co"># high and low otlier quantile across proteins to clip</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>                           <span class="co"># the `quantile.clip` parameter can be adjusted: </span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>                           <span class="at">quantile.clip =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.9995</span>) </span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>                           )</span></code></pre></div>
 </div>
 <div id="using-a-different-background-scaling-method" class="section level2">
 <h2>Using a different background scaling method
@@ -685,16 +685,16 @@ by the ambient background standard deviation, one can set
 appropriate for datasets staining with very large panels with lowly
 titrated antibodies. Can be used if the range of values for some
 proteins looks vary large or if minimal background detected.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dsb_norm_prot <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>],</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">quantile.clipping =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">scale.factor =</span> <span class="st">&#39;mean.subtract&#39;</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                           )</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>dsb_norm_prot <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>                           <span class="at">cell_protein_matrix =</span> cells_citeseq_mtx,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                           <span class="at">empty_drop_matrix =</span> empty_drop_citeseq_mtx,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>                           <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>                           <span class="at">use.isotype.control =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>                           <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>],</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>                           <span class="at">quantile.clipping =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>                           <span class="at">scale.factor =</span> <span class="st">&#39;mean.subtract&#39;</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>                           )</span></code></pre></div>
 </div>
 <div id="frequently-asked-questions" class="section level2">
 <h2>Frequently Asked Questions <a name="faq"></a></h2>
@@ -738,10 +738,10 @@ and they can possibly be removed from the dataset. <a href="https://github.com/n
 <a href="https://github.com/niaid/dsb/issues/9" class="uri">https://github.com/niaid/dsb/issues/9</a></p>
 <div id="check-for-outliers-in-dsb-normalized-values" class="section level3">
 <h3>check for outliers in dsb normalized values</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find outliers </span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pheatmap<span class="sc">::</span><span class="fu">pheatmap</span>(<span class="fu">apply</span>(dsb_norm_prot, <span class="dv">1</span>, <span class="cf">function</span>(x){</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(x,<span class="fu">c</span>(<span class="fl">0.9999</span>, <span class="fl">0.99</span>, <span class="fl">0.98</span>, <span class="fl">0.95</span>, <span class="fl">0.0001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  }))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># find outliers </span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>pheatmap<span class="sc">::</span><span class="fu">pheatmap</span>(<span class="fu">apply</span>(dsb_norm_prot, <span class="dv">1</span>, <span class="cf">function</span>(x){</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">quantile</span>(x,<span class="fu">c</span>(<span class="fl">0.9999</span>, <span class="fl">0.99</span>, <span class="fl">0.98</span>, <span class="fl">0.95</span>, <span class="fl">0.0001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  }))</span></code></pre></div>
 <p>We can address this by clipping the max and min values as above in
 the quantile clipping section.</p>
 <p><strong>What are the minimum number of proteins required to use
@@ -753,20 +753,20 @@ controls. With less proteins than this, we recommend users return the
 internal stats calculated by dsb and check correlations of the variables
 as shown below. If these values are reasonably correlated, it indicates
 the model assumptions of dsb could be valid.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dsb_object <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(<span class="at">cell_protein_matrix =</span> dsb<span class="sc">::</span>cells_citeseq_mtx, </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">empty_drop_matrix =</span> dsb<span class="sc">::</span>empty_drop_citeseq_mtx,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(dsb<span class="sc">::</span>cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>], </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">return.stats =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">as.data.frame</span>(dsb_object<span class="sc">$</span>dsb_stats)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># test correlation of background mean with the inferred dsb technical component </span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(d<span class="sc">$</span>cellwise_background_mean, d<span class="sc">$</span>dsb_technical_component)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># test average isotype control value correlation with the background mean </span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>isotype_names <span class="ot">=</span> <span class="fu">rownames</span>(dsb<span class="sc">::</span>cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>]</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">rowMeans</span>(d[,isotype_names]), d<span class="sc">$</span>cellwise_background_mean)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>dsb_object <span class="ot">=</span> <span class="fu">DSBNormalizeProtein</span>(<span class="at">cell_protein_matrix =</span> dsb<span class="sc">::</span>cells_citeseq_mtx, </span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>                                 <span class="at">empty_drop_matrix =</span> dsb<span class="sc">::</span>empty_drop_citeseq_mtx,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>                                 <span class="at">denoise.counts =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>                                 <span class="at">isotype.control.name.vec =</span> <span class="fu">rownames</span>(dsb<span class="sc">::</span>cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>], </span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>                                 <span class="at">return.stats =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">as.data.frame</span>(dsb_object<span class="sc">$</span>dsb_stats)</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co"># test correlation of background mean with the inferred dsb technical component </span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="fu">cor</span>(d<span class="sc">$</span>cellwise_background_mean, d<span class="sc">$</span>dsb_technical_component)</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co"># test average isotype control value correlation with the background mean </span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>isotype_names <span class="ot">=</span> <span class="fu">rownames</span>(dsb<span class="sc">::</span>cells_citeseq_mtx)[<span class="dv">67</span><span class="sc">:</span><span class="dv">70</span>]</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">rowMeans</span>(d[,isotype_names]), d<span class="sc">$</span>cellwise_background_mean)</span></code></pre></div>
 <p><strong>How do I know whether I should set the denoise.counts
 argument to TRUE vs FALSE?</strong><br />
 In the vast majority of cases we recommend setting
@@ -802,21 +802,21 @@ data.<br />
 |_10xlane2<br />
   |_outs<br />
     |_raw_feature_bc_matrix</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat) <span class="co"># for Read10X helper function</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># path_to_reads = here(&quot;data/&quot;)</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>umi.files <span class="ot">=</span> <span class="fu">list.files</span>(path_to_reads, <span class="at">full.names=</span>T, <span class="at">pattern =</span> <span class="st">&quot;10x&quot;</span> )</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>umi.list <span class="ot">=</span> <span class="fu">lapply</span>(umi.files, <span class="cf">function</span>(x) <span class="fu">Read10X</span>(<span class="at">data.dir =</span> <span class="fu">paste0</span>(x,<span class="st">&quot;/outs/raw_feature_bc_matrix/&quot;</span>)))</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>prot <span class="ot">=</span> rna <span class="ot">=</span> <span class="fu">list</span>()</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(umi.list)) {</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  prot[[i]] <span class="ot">=</span> umi.list[[i]]<span class="st">`</span><span class="at">Antibody Capture</span><span class="st">`</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  rna[[i]] <span class="ot">=</span> umi.list[[i]]<span class="st">`</span><span class="at">Gene Expression</span><span class="st">`</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(prot[[i]]) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(prot[[i]]),<span class="st">&quot;_&quot;</span>, i )</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(rna[[i]]) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(rna[[i]]),<span class="st">&quot;_&quot;</span>, i )</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>}  </span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>prot <span class="ot">=</span> <span class="fu">do.call</span>(cbind, prot)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>rna <span class="ot">=</span> <span class="fu">do.call</span>(cbind, rna)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># proceed with step 1 in tutorial - define background and cell containing drops for dsb</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(Seurat) <span class="co"># for Read10X helper function</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># path_to_reads = here(&quot;data/&quot;)</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>umi.files <span class="ot">=</span> <span class="fu">list.files</span>(path_to_reads, <span class="at">full.names=</span>T, <span class="at">pattern =</span> <span class="st">&quot;10x&quot;</span> )</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>umi.list <span class="ot">=</span> <span class="fu">lapply</span>(umi.files, <span class="cf">function</span>(x) <span class="fu">Read10X</span>(<span class="at">data.dir =</span> <span class="fu">paste0</span>(x,<span class="st">&quot;/outs/raw_feature_bc_matrix/&quot;</span>)))</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>prot <span class="ot">=</span> rna <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(umi.list)) {</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  prot[[i]] <span class="ot">=</span> umi.list[[i]]<span class="st">`</span><span class="at">Antibody Capture</span><span class="st">`</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>  rna[[i]] <span class="ot">=</span> umi.list[[i]]<span class="st">`</span><span class="at">Gene Expression</span><span class="st">`</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  <span class="fu">colnames</span>(prot[[i]]) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(prot[[i]]),<span class="st">&quot;_&quot;</span>, i )</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>  <span class="fu">colnames</span>(rna[[i]]) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(rna[[i]]),<span class="st">&quot;_&quot;</span>, i )</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>}  </span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>prot <span class="ot">=</span> <span class="fu">do.call</span>(cbind, prot)</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>rna <span class="ot">=</span> <span class="fu">do.call</span>(cbind, rna)</span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co"># proceed with step 1 in tutorial - define background and cell containing drops for dsb</span></span></code></pre></div>
 <p><strong>I have 2 batches, should I combine them into a single batch
 or normalize each batch separately?</strong> - (See issue 12 on the dsb
 github) How much batch variation there is depends on how much

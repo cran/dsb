@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -30,7 +30,7 @@ mean_nlog = apply(nlog, 1 , mean)
 norm_adt = apply(dlog, 2, function(x) (x  - mean_nlog) / sd_nlog) 
 
 
-## ---- fig.width=8, fig.height=3.5---------------------------------------------
+## ----fig.width=8, fig.height=3.5----------------------------------------------
 # check structure of denoised data with zero centering of background population 
 r = 'deepskyblue3'
 plist = list(theme_bw(), geom_density_2d(color = r), 
@@ -68,7 +68,7 @@ cmd = apply(norm_adt, 2, function(x) {
 })
 
 
-## ---- fig.width=4.5, fig.height=3.5-------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 cell.name = colnames(norm_adt)[2]
 # get density 
 cell2 = MclustDR(cmd[[2]])
@@ -80,7 +80,7 @@ title(cex.main = 0.6, paste0('single cell:  ',cell.name,
 ## -----------------------------------------------------------------------------
 table(cell2$classification)
 
-## ---- fig.width=4.5, fig.height=3.5-------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 # fit a mixture with between 1 and 6 components. 
 m.list = lapply(as.list(1:6), function(k) Mclust(norm_adt[ ,2], G = k,
                                                  warn = FALSE, verbose = FALSE ))
@@ -101,7 +101,7 @@ plot(dr_6,what = "density")
 title(cex.main = 0.6, plot.title)
 
 
-## ----  fig.width=4.5, fig.height=3.5------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 
 plot(
   sapply(m.list, function(x) x$bic), type = 'b',
@@ -111,7 +111,7 @@ plot(
   col =r, pch = 18, cex = 1.4, cex.main = 0.8
   )
 
-## ----  fig.width=4.5, fig.height=3.5------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 
 # extract mu 1 as a vector 
 mu.1 = unlist(
@@ -137,7 +137,7 @@ tmat = t(noise_matrix)
 # view the noise matrix on which to calculate pc1 scores. 
 head(tmat)
 
-## ----  fig.width=4.5, fig.height=3.5------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 # calculate principal component 1 
 g = prcomp(tmat, scale = TRUE)
 
@@ -148,7 +148,7 @@ dsb.technical.component = g$x[ ,1]
 
 hist(dsb.technical.component, breaks = 40, col = r)
 
-## ----  fig.width=4.5, fig.height=3.5------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 
 # constructs a matrix of 1 by number of columns in norm_adt1
 covariate = as.matrix(dsb.technical.component)
@@ -182,7 +182,7 @@ denoised_adt_3 = DSBNormalizeProtein(cell_protein_matrix = cell,
                                      isotype.control.name.vec = isotype.control.name.vec)
 
 
-## ---- fig.width=4.5, fig.height=3.5-------------------------------------------
+## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 
 qplot(as.data.frame(t(denoised_adt))$CD3_PROT, 
       as.data.frame(t(denoised_adt))$CD19_PROT) + 

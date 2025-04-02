@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  install.packages('dsb')
 #  library(dsb)
 #  
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 #    isotype.control.name.vec = rownames(cells_citeseq_mtx)[67:70]
 #    )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(dsb)
 #  
 #  # read raw data using the Seurat function "Read10X"
@@ -34,7 +34,7 @@ knitr::opts_chunk$set(
 #  prot = raw$`Antibody Capture`
 #  rna = raw$`Gene Expression`
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # create metadata of droplet QC stats used in standard scRNAseq processing
 #  mtgene = grep(pattern = "^MT-", rownames(rna), value = TRUE) # used below
 #  
@@ -51,14 +51,14 @@ knitr::opts_chunk$set(
 #  md = md[md$rna.size > 0 & md$prot.size > 0, ]
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  ggplot(md, aes(x = log10(n.gene), y = prot.size )) +
 #     theme_bw() +
 #     geom_bin2d(bins = 300) +
 #     scale_fill_viridis_c(option = "C") +
 #     facet_wrap(~drop.class)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  background_drops = rownames(
 #    md[ md$prot.size > 1.5 &
 #        md$prot.size < 3 &
@@ -66,7 +66,7 @@ knitr::opts_chunk$set(
 #    )
 #  background.adt.mtx = as.matrix(prot[ , background_drops])
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  
 #  # calculate statistical thresholds for droplet filtering.
 #  cellmd = md[md$drop.class == 'cell', ]
@@ -88,27 +88,27 @@ knitr::opts_chunk$set(
 #           cellmd$mt.prop < 0.14, ]
 #    )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  length(qc_cells)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  cell.adt.raw = as.matrix(prot[ , qc_cells])
 #  cell.rna.raw = rna[ ,qc_cells]
 #  cellmd = cellmd[qc_cells, ]
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # flter
 #  pm = sort(apply(cell.adt.raw, 1, max))
 #  pm2 = apply(background.adt.mtx, 1, max)
 #  head(pm)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # remove the non staining protein
 #  cell.adt.raw  = cell.adt.raw[!rownames(cell.adt.raw) == 'CD34_TotalSeqB', ]
 #  background.adt.mtx = background.adt.mtx[!rownames(background.adt.mtx) == 'CD34_TotalSeqB', ]
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # define isotype controls
 #  isotype.controls = c("IgG1_control_TotalSeqB", "IgG2a_control_TotalSeqB",
 #                       "IgG2b_control_TotalSeqB")
@@ -126,7 +126,7 @@ knitr::opts_chunk$set(
 #  # user  system elapsed
 #  #  20.799   0.209  21.783
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # dsb with non-standard options
 #  cell.adt.dsb.2 = DSBNormalizeProtein(
 #    cell_protein_matrix = cell.adt.raw,
@@ -144,7 +144,7 @@ knitr::opts_chunk$set(
 #  
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # Seurat workflow
 #  library(Seurat)
 #  
@@ -162,7 +162,7 @@ knitr::opts_chunk$set(
 #  s[["CITE"]] = Seurat::CreateAssayObject(data = cells.dsb.norm)
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # define proteins to use in clustering (non-isptype controls)
 #  prots = rownames(s@assays$CITE@data)[1:28]
 #  
@@ -187,7 +187,7 @@ knitr::opts_chunk$set(
 #            # s@reductions$umap@cell.embeddings)
 #            )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(magrittr)
 #  # calculate the median protein expression separately for each cluster
 #  adt_plot = d %>%
@@ -306,7 +306,7 @@ knitr::opts_chunk$set(
 #    tibble::column_to_rownames("dsb_knn_res.1.5")
 #  
 
-## ---- fig.height=4, fig.width=3-----------------------------------------------
+## ----fig.height=4, fig.width=3------------------------------------------------
 #  # make a combined plot
 #  suppressMessages(library(ComplexHeatmap)); ht_opt$message = FALSE
 #  
@@ -340,7 +340,7 @@ knitr::opts_chunk$set(
 #  draw(ht_list)
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(Seurat)
 #  umi = Read10X(data.dir = 'data/raw_feature_bc_matrix/')
 #  k = 3

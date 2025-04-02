@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
 
 ## -----------------------------------------------------------------------------
 library(dsb)
-# pecify isotype controls to use in step II 
+# Specify isotype controls to use in step II 
 isotypes = c("MouseIgG1kappaisotype_PROT", "MouseIgG2akappaisotype_PROT", 
              "Mouse IgG2bkIsotype_PROT", "RatIgG2bkIsotype_PROT")
 
@@ -19,7 +19,7 @@ norm.adt = ModelNegativeADTnorm(cell_protein_matrix = raw.adt.matrix,
                                 )
 
 
-## ---- fig.width=7.5, fig.height=6---------------------------------------------
+## ----fig.width=7.5, fig.height=6----------------------------------------------
 par(mfrow = c(2,2)); r = '#009ACD80'
 lab = 'ModelNegativeADTnorm'
 hist(norm.adt["CD4_PROT", ], breaks = 45, col = r, main = 'CD4', xlab = lab)
@@ -27,12 +27,11 @@ hist(norm.adt["CD8_PROT", ], breaks = 45, col = r, main = 'CD8', xlab = lab)
 hist(norm.adt["CD19_PROT", ], breaks = 45, col = r, main = 'CD19', xlab = lab)
 hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # these data were installed with the SeuratData package
 #  # devtools::install_github('satijalab/seurat-data')
 #  # library(SeuratData)
-#  # InstallData(ds = 'bmcite')
-#  
+#  # InstallData(ds = 'bmcite') from https://doi.org/10.1016/j.cell.2019.05.031
 #  # load bone marrow CITE-seq data
 #  data('bmcite')
 #  bm = bmcite; rm(bmcite)
@@ -45,7 +44,7 @@ hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 #                                  denoise.counts = TRUE,
 #                                  use.isotype.control = FALSE)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  
 #  # specify isotype controls
 #  isotype.controls = c('isotype1', 'isotype 2')
@@ -56,7 +55,7 @@ hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 #                                    isotype.control.name.vec = isotype.controls
 #                                    )
 
-## ---- fig.width=7, fig.height=3.5, eval = FALSE-------------------------------
+## ----fig.width=7, fig.height=3.5, eval = FALSE--------------------------------
 #  library(ggplot2); theme_set(theme_bw())
 #  plist = list(geom_vline(xintercept = 0, color = 'red'),
 #               geom_hline(yintercept = 0, color = 'red'),
@@ -69,7 +68,7 @@ hist(norm.adt["CD18_PROT", ], breaks = 45, col = r, main = 'CD18', xlab = lab)
 #  cowplot::plot_grid(p1,p2)
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  bm = SetAssayData(bmcite, slot = 'data',
 #                    assay = 'ADT',
 #                    new.data = dsb.norm)

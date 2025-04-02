@@ -1,10 +1,10 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  suppressMessages(library(SingleCellExperiment))
 #  sce = SingleCellExperiment(assays = list(counts = cell.rna.raw), colData = cellmd)
 #  # define the dsb normalized values as logcounts to use a common SingleCellExperiment / Bioconductor convention
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 #    )
 #  altExp(sce, "CITE") = adt
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(reticulate); sc = import("scanpy")
 #  
 #  # merge dsb-normalized protein and raw RNA data
@@ -30,14 +30,14 @@ knitr::opts_chunk$set(
 #      var = GetAssay(seurat)[[]]
 #      )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # suggested workflow if isotype controls are not included
 #  dsb_rescaled = DSBNormalizeProtein(cell_protein_matrix = cells_citeseq_mtx,
 #                                     empty_drop_matrix = empty_drop_citeseq_mtx,
 #                                     # do not denoise each cell's technical component
 #                                     denoise.counts = FALSE)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  
 #  dsb_rescaled = dsb::DSBNormalizeProtein(cell_protein_matrix = cells_citeseq_mtx,
 #                                          empty_drop_matrix = empty_drop_citeseq_mtx,
@@ -46,7 +46,7 @@ knitr::opts_chunk$set(
 #                                          use.isotype.control = FALSE)
 #  
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # raw = Read10X see above -- path to cell ranger outs/raw_feature_bc_matrix ;
 #  
 #  # partial thresholding to slightly subset negative drops include all with 5 unique mRNAs
@@ -105,7 +105,7 @@ names(result.list$protein_stats)
 ## -----------------------------------------------------------------------------
 head(result.list$technical_stats)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  dsb_norm_prot = DSBNormalizeProtein(
 #                             cell_protein_matrix = cells_citeseq_mtx,
 #                             empty_drop_matrix = empty_drop_citeseq_mtx,
@@ -119,7 +119,7 @@ head(result.list$technical_stats)
 #                             quantile.clip = c(0.001, 0.9995)
 #                             )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  
 #  dsb_norm_prot = DSBNormalizeProtein(
 #                             cell_protein_matrix = cells_citeseq_mtx,
@@ -132,14 +132,14 @@ head(result.list$technical_stats)
 #                             )
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # find outliers
 #  pheatmap::pheatmap(apply(dsb_norm_prot, 1, function(x){
 #    quantile(x,c(0.9999, 0.99, 0.98, 0.95, 0.0001, 0.01, 0.1))
 #    }))
 #  
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  
 #  dsb_object = DSBNormalizeProtein(cell_protein_matrix = dsb::cells_citeseq_mtx,
 #                                   empty_drop_matrix = dsb::empty_drop_citeseq_mtx,
@@ -156,7 +156,7 @@ head(result.list$technical_stats)
 #  cor(rowMeans(d[,isotype_names]), d$cellwise_background_mean)
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(Seurat) # for Read10X helper function
 #  
 #  # path_to_reads = here("data/")
