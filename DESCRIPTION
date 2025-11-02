@@ -1,7 +1,7 @@
 Package: dsb
 Type: Package
 Title: Normalize & Denoise Droplet Single Cell Protein Data (CITE-Seq)
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: 
     c(person(given = "Matthew",
              family = "Mulè",
@@ -32,10 +32,11 @@ BugReports: https://github.com/niaid/dsb/issues
 VignetteBuilder: knitr, rmarkdown
 Language: en-US
 NeedsCompilation: no
-Packaged: 2025-04-02 20:12:12 UTC; mpm
-Author: Matthew Mulè [aut, cre] (<https://orcid.org/0000-0001-8457-2716>),
-  Andrew Martins [aut] (<https://orcid.org/0000-0002-1832-1924>),
-  John Tsang [pdr] (<https://orcid.org/0000-0003-3186-3047>)
+Packaged: 2025-11-02 12:25:46 UTC; mpm
+Author: Matthew Mulè [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-8457-2716>),
+  Andrew Martins [aut] (ORCID: <https://orcid.org/0000-0002-1832-1924>),
+  John Tsang [pdr] (ORCID: <https://orcid.org/0000-0003-3186-3047>)
 Maintainer: Matthew Mulè <mattmule@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-04-02 20:30:02 UTC
+Date/Publication: 2025-11-02 22:30:02 UTC

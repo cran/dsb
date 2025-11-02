@@ -6,7 +6,6 @@ knitr::opts_chunk$set(
 
 ## -----------------------------------------------------------------------------
 suppressMessages(library(mclust))
-suppressMessages(library(magrittr))
 suppressMessages(library(ggplot2))
 library(dsb) 
 
@@ -33,9 +32,9 @@ norm_adt = apply(dlog, 2, function(x) (x  - mean_nlog) / sd_nlog)
 ## ----fig.width=8, fig.height=3.5----------------------------------------------
 # check structure of denoised data with zero centering of background population 
 r = 'deepskyblue3'
-plist = list(theme_bw(), geom_density_2d(color = r), 
-             geom_vline(xintercept = 0, linetype = 'dashed'),
-             geom_hline(yintercept = 0, linetype = 'dashed'),
+plist = list(theme_bw(), 
+             geom_vline(xintercept = 0, linetype = 'dashed', color = 'red'),
+             geom_hline(yintercept = 0, linetype = 'dashed', color = 'red'),
              xlab('CD3'), ylab('CD19')
              )
 
@@ -50,7 +49,6 @@ p2 = qplot(as.data.frame(t(cell))$CD3_PROT,
   plist + 
   ggtitle('RAW data') 
   
-
 # log transformed data 
 p3 = qplot(as.data.frame(t(dlog))$CD3_PROT, 
           as.data.frame(t(dlog))$CD19_PROT) + 
@@ -181,6 +179,10 @@ denoised_adt_3 = DSBNormalizeProtein(cell_protein_matrix = cell,
                                      denoise.counts = TRUE, 
                                      isotype.control.name.vec = isotype.control.name.vec)
 
+
+## -----------------------------------------------------------------------------
+all.equal(denoised_adt, denoised_adt_2) 
+all.equal(denoised_adt, denoised_adt_3)
 
 ## ----fig.width=4.5, fig.height=3.5--------------------------------------------
 
